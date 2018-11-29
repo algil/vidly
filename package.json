@@ -1,0 +1,27 @@
+{
+  "name": "vidly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algil/vidly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/algil/vidly/issues"
+  },
+  "homepage": "https://github.com/algil/vidly#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
+  }
+}

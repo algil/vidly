@@ -1,0 +1,16 @@
+{
+  "genres": [
+    {
+      "id": 1,
+      "name": "Terror"
+    },
+    {
+      "id": 2,
+      "name": "Action"
+    },
+    {
+      "id": 3,
+      "name": "Adventure"
+    }
+  ]
+}
