@@ -1,9 +1,15 @@
 'use strict';
 
 const express = require('express');
-const genresRoutes = require('./routes/genres');
+const mongoose = require('mongoose');
+const genresRoutes = require('./routes/genres.route');
 
 const app = express();
+
+mongoose.connect(
+  'mongodb://localhost/vidly',
+  { useNewUrlParser: true }
+);
 
 app.use(express.json());
 
