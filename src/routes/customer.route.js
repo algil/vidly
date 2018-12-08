@@ -1,8 +1,7 @@
 'use strict';
 
 const express = require('express');
-const Joi = require('joi');
-const Customer = require('../model/customer');
+const { Customer, validate } = require('../models/customer');
 
 const router = express.Router();
 
@@ -21,7 +20,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { error } = validateCustomer(req.body);
+  const { error } = validate(req.body);
   if (error) {
     return res.status(400).send(error);
   }
@@ -37,7 +36,7 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { error } = validateCustomer(req.body);
+  const { error } = validate(req.body);
   if (error) {
     return res.status(400).send(error);
   }
@@ -70,20 +69,5 @@ router.delete('/:id', async (req, res) => {
 
   res.send(customer);
 });
-
-function validateCustomer(customer) {
-  const schema = {
-    name: Joi.string()
-      .min(5)
-      .max(50)
-      .required(),
-    phone: Joi.string()
-      .min(5)
-      .max(50)
-      .required(),
-    isGold: Joi.boolean()
-  };
-  return Joi.validate(customer, schema);
-}
 
 module.exports = router;
