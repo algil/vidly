@@ -16,7 +16,7 @@ const Rental = mongoose.model(
         },
         isGold: {
           type: Boolean,
-          required: true
+          default: false
         },
         phone: {
           type: String,

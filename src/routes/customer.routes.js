@@ -1,17 +1,17 @@
 'use strict';
 
 const express = require('express');
-const { Rental, validate } = require('../models/customer');
+const { Customer, validate } = require('../models/customer');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const customers = await Rental.find();
+  const customers = await Customer.find();
   res.send(customers);
 });
 
 router.get('/:id', async (req, res) => {
-  const customer = await Rental.findById(req.params.id);
+  const customer = await Customer.findById(req.params.id);
   if (!customer) {
     return res.status(404).send('Customer not found with specified id');
   }
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
 
-  const customer = new Rental({
+  const customer = new Customer({
     name: req.body.name,
     isGold: req.body.isGold,
     phone: req.body.phone
@@ -41,7 +41,7 @@ router.put('/:id', async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
 
-  const customer = await Rental.findByIdAndUpdate(
+  const customer = await Customer.findByIdAndUpdate(
     req.params.id,
     {
       name: req.body.name,

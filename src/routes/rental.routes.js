@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     return res.status(400).send('Movie not in stock');
   }
 
-  const rentals = new Rental({
+  const rental = new Rental({
     customer: {
       _id: customer._id,
       name: customer.name,
@@ -44,12 +44,27 @@ router.post('/', async (req, res) => {
       dailyRentalRate: movie.dailyRentalRate
     }
   });
-  await rentals.save();
 
-  movie.numberInStock--;
-  await movie.save();
+  const session = await Rental.startSession();
+  session.startTransaction();
 
-  res.send(rentals);
+  try {
+    rental = await rental.save();
+
+    movie.numberInStock--;
+    movie.save();
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.send(rental);
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error(error);
+    return res.status(500).send(error.message);
+  }
 });
 
 module.exports = router;
