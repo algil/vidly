@@ -49,7 +49,7 @@ function validate(movie) {
       .required()
       .min(0)
       .max(255),
-    genreId: Joi.string().required()
+    genreId: Joi.objectId().required()
   };
   Joi.validate(movie, schema);
 }
