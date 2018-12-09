@@ -41,6 +41,6 @@ function validate(customer) {
 }
 
 module.exports = {
-  Customer,
+  Movie,
   validate
 };
