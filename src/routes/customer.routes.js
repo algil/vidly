@@ -1,17 +1,17 @@
 'use strict';
 
 const express = require('express');
-const { Movie, validate } = require('../models/customer');
+const { Rental, validate } = require('../models/customer');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const customers = await Movie.find();
+  const customers = await Rental.find();
   res.send(customers);
 });
 
 router.get('/:id', async (req, res) => {
-  const customer = await Movie.findById(req.params.id);
+  const customer = await Rental.findById(req.params.id);
   if (!customer) {
     return res.status(404).send('Customer not found with specified id');
   }
@@ -22,10 +22,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) {
-    return res.status(400).send(error);
+    return res.status(400).send(error.details[0].message);
   }
 
-  const customer = new Movie({
+  const customer = new Rental({
     name: req.body.name,
     isGold: req.body.isGold,
     phone: req.body.phone
@@ -38,10 +38,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { error } = validate(req.body);
   if (error) {
-    return res.status(400).send(error);
+    return res.status(400).send(error.details[0].message);
   }
 
-  const customer = await Movie.findByIdAndUpdate(
+  const customer = await Rental.findByIdAndUpdate(
     req.params.id,
     {
       name: req.body.name,
@@ -61,7 +61,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const customer = await Movie.findByIdAndDelete(req.params.id);
+  const customer = await Rental.findByIdAndDelete(req.params.id);
 
   if (!customer) {
     return req.status(404).send('Customer not found with specified id');
