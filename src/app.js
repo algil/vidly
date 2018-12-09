@@ -9,9 +9,11 @@ const genresRoutes = require('./routes/genres.routes');
 const customerRoutes = require('./routes/customer.routes');
 const movieRoutes = require('./routes/movie.routes');
 const rentalRoutes = require('./routes/rental.routes');
+const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
+mongoose.set('useCreateIndex', true);
 mongoose.connect(
   'mongodb://localhost/vidly',
   { useNewUrlParser: true }
@@ -23,6 +25,7 @@ app.use('/api/genres', genresRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api/rentals', rentalRoutes);
+app.use('/api/users', userRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
