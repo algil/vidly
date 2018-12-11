@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const { pick } = require('lodash');
 const { User, validate } = require('../models/user');
 
 const router = express.Router();
@@ -16,14 +17,10 @@ router.post('/', async (req, res) => {
     return res.status(400).send('User already registered');
   }
 
-  user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  });
+  user = new User(pick(req.body, 'name', 'email', 'password'));
   await user.save();
 
-  res.send(user);
+  res.send(pick(user, '_id', 'name', 'email'));
 });
 
 module.exports = router;

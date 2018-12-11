@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const { pick } = require('lodash');
 const { Genre } = require('../models/genre');
 const { Movie, validate } = require('../models/movie');
 
@@ -31,15 +32,15 @@ router.post('/', async (req, res) => {
     return res.status(400).send('Invalid genre');
   }
 
-  const movie = new Movie({
-    title: req.body.title,
-    numberInStock: req.body.numberInStock,
-    dailyRentalRate: req.body.dailyRentalRate,
-    genre: {
-      _id: genre._id,
-      name: genre.name
-    }
-  });
+  const movie = new Movie(
+    pick(req.body, [
+      'title',
+      'numberInStock',
+      'dailyRentalRate',
+      'genre._id',
+      'genre.name'
+    ])
+  );
 
   await movie.save();
   res.send(movie);
@@ -58,15 +59,13 @@ router.put('/:id', async (req, res) => {
 
   const movie = await Movie.findByIdAndUpdate(
     req.params.id,
-    {
-      title: req.body.title,
-      numberInStock: req.body.numberInStock,
-      dailyRentalRate: req.body.dailyRentalRate,
-      genre: {
-        _id: genre._id,
-        name: genre.name
-      }
-    },
+    pick(req.body, [
+      'title',
+      'numberInStock',
+      'dailyRentalRate',
+      'genre._id',
+      'genre.name'
+    ]),
     {
       new: true
     }

@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const { pick } = require('lodash');
 const { Customer, validate } = require('../models/customer');
 
 const router = express.Router();
@@ -25,11 +26,7 @@ router.post('/', async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
 
-  const customer = new Customer({
-    name: req.body.name,
-    isGold: req.body.isGold,
-    phone: req.body.phone
-  });
+  const customer = new Customer(pick(req.body, ['name', 'isGold', 'phone']));
 
   await customer.save();
   res.send(customer);
@@ -43,11 +40,7 @@ router.put('/:id', async (req, res) => {
 
   const customer = await Customer.findByIdAndUpdate(
     req.params.id,
-    {
-      name: req.body.name,
-      isGold: req.body.isGold,
-      phone: req.body.phone
-    },
+    pick(req.body, 'name', 'isGold', 'phone'),
     {
       new: true
     }

@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const { pick } = require('lodash');
 const { Customer } = require('../models/customer');
 const { Movie } = require('../models/movie');
 const { Rental, validate } = require('../models/rental');
@@ -33,16 +34,8 @@ router.post('/', async (req, res) => {
   }
 
   const rental = new Rental({
-    customer: {
-      _id: customer._id,
-      name: customer.name,
-      phone: customer.phone
-    },
-    movie: {
-      _id: movie._id,
-      title: movie.title,
-      dailyRentalRate: movie.dailyRentalRate
-    }
+    customer: pick(customer, '_id', 'name', 'phone'),
+    movie: pick(customer, '_id', 'title', 'dailyRentalRate')
   });
 
   const session = await Rental.startSession();

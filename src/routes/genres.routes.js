@@ -1,4 +1,5 @@
 const express = require('express');
+const { pick } = require('lodash');
 const { Genre, validate } = require('../models/genre');
 
 const router = express.Router();
