@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const config = require('config');
 const mongoose = require('mongoose');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -11,6 +12,11 @@ const movieRoutes = require('./routes/movie.routes');
 const rentalRoutes = require('./routes/rental.routes');
 const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
+
+if (!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+  process.exit(1);
+}
 
 const app = express();
 
