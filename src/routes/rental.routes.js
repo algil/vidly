@@ -5,6 +5,7 @@ const { pick } = require('lodash');
 const { Customer } = require('../models/customer');
 const { Movie } = require('../models/movie');
 const { Rental, validate } = require('../models/rental');
+const auth = require('../middleware/auth.middleware');
 
 const router = express.Router();
 

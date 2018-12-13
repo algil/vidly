@@ -3,6 +3,7 @@
 const express = require('express');
 const { pick } = require('lodash');
 const { Customer, validate } = require('../models/customer');
+const auth = require('../middleware/auth.middleware');
 
 const router = express.Router();
 
