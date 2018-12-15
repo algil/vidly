@@ -1,10 +1,13 @@
 'use strict';
 
+require('express-async-errors');
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
+
+const errorMiddleware = require('./middleware/error.middleware');
 
 const genresRoutes = require('./routes/genres.routes');
 const customerRoutes = require('./routes/customer.routes');
@@ -34,6 +37,7 @@ app.use('/api/movies', movieRoutes);
 app.use('/api/rentals', rentalRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use(errorMiddleware);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

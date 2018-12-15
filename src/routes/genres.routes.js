@@ -6,12 +6,8 @@ const admin = require('../middleware/admin.middleware');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  try {
-    const genres = await Genre.find();
-    res.send(genres);
-  } catch (error) {
-    console.error(error);
-  }
+  const genres = await Genre.find();
+  res.send(genres);
 });
 
 router.get('/:id', async (req, res) => {
