@@ -6,13 +6,11 @@ const admin = require('../middleware/admin.middleware');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  throw new Error('Could not get genres');
   const genres = await Genre.find();
   res.send(genres);
 });
 
 router.get('/:id', async (req, res) => {
-  throw new Error('Could not get a genre');
   const genre = await Genre.findById(req.param.id);
   if (!genre) return res.status(404).send('Genre not found with specified id');
 
