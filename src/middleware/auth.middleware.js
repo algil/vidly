@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, config.get('jwtPrivateKey'));
-    console.log(payload);
     req.user = payload;
     next();
   } catch (error) {
