@@ -1,5 +1,6 @@
-/node_modules
+node_modules/
+coverage/
 config/development\.json
+config/test\.json
 *.log
 
-config/test\.json
