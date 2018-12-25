@@ -9,6 +9,7 @@ describe('/api/genres', () => {
   beforeEach(() => {
     server = require('../../src/app');
   });
+
   afterEach(async () => {
     server.close();
     await Genre.remove({});
@@ -49,8 +50,8 @@ describe('/api/genres', () => {
     let token;
     let name;
 
-    const doPost = async () => {
-      return await request(server)
+    const doPost = () => {
+      return request(server)
         .post('/api/genres')
         .set('x-auth-token', token)
         .send({ name });
