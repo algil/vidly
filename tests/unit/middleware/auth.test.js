@@ -1,16 +1,11 @@
 'use strict';
 
-const mongoose = require('mongoose');
 const auth = require('../../../src/middleware/auth.middleware');
 const { User } = require('../../../src/models/user');
 
 describe('auth middleware', () => {
   it('should populate req.user with the payload of a valid JWT', () => {
-    const user = {
-      _id: mongoose.Types.ObjectId().toHexString(),
-      isAdmin: true
-    };
-    const token = new User(user).generateAuthToken();
+    const token = new User({ isAdmin: true }).generateAuthToken();
     const req = {
       header: jest.fn().mockReturnValue(token)
     };
@@ -19,7 +14,8 @@ describe('auth middleware', () => {
 
     auth(req, res, next);
 
-    expect(req.user).toMatchObject(user);
+    expect(req.user).toHaveProperty('_id');
+    expect(req.user).toHaveProperty('isAdmin', true);
     expect(next).toBeCalled();
   });
 });
